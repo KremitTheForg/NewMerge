@@ -1,6 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 
+const ProfileOverview: React.FC = () => {
+  const { id } = useParams<{ id?: string }>();
 const ApplicantProfile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const profileLabel = id ? `Profile Details · ID ${id}` : "Profile Details";
@@ -13,6 +15,9 @@ const ApplicantProfile: React.FC = () => {
           <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-bold">
             P
           </div>
+          <span className="font-medium text-gray-700">
+            {id ? `Profile Details · ID ${id}` : "Profile Details"}
+          </span>
           <span className="font-medium text-gray-700">{profileLabel}</span>
         </div>
         <button className="bg-gray-100 border border-gray-300 text-gray-700 px-4 py-1 rounded hover:bg-gray-200 text-sm">
@@ -42,6 +47,7 @@ const ApplicantProfile: React.FC = () => {
         <div className="space-y-4">
           <div className="bg-white rounded-md p-4 shadow-sm">
             <div className="w-full h-28 bg-gray-200 rounded mb-3" />
+            <div className="font-medium text-gray-700 mb-1">Quik Spapshot</div>
             <div className="font-medium text-gray-700 mb-1">Quick Snapshot</div>
             <div className="space-y-2">
               <div className="h-3 bg-gray-200 rounded w-3/4" />
@@ -74,6 +80,9 @@ const ApplicantProfile: React.FC = () => {
               <div className="h-3 bg-gray-200 rounded w-1/2" />
               <div className="h-3 bg-gray-200 rounded w-3/4" />
             </div>
+            <div className="font-medium text-gray-700 text-sm mb-1">
+              Training And Developement
+            </div>
             <div className="font-medium text-gray-700 text-sm mb-1">Training &amp; Development</div>
             <div className="h-16 bg-gray-200 rounded w-full" />
           </div>
@@ -97,5 +106,6 @@ const ApplicantProfile: React.FC = () => {
   );
 };
 
+export default ProfileOverview;
 export default ApplicantProfile;
 

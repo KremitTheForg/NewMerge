@@ -32,11 +32,21 @@ pwd_context = CryptContext(
     bcrypt__truncate_error=False,
 )
 
+
+def _truncate_for_bcrypt(password: str) -> str:
+    """Return a password trimmed to the 72-byte bcrypt limit."""
+
+    if password is None:
+        return ""
+    return password.encode("utf-8")[:72].decode("utf-8", "ignore")
+
+
 def get_password_hash(password: str):
-    return pwd_context.hash(password)
+    return pwd_context.hash(_truncate_for_bcrypt(password))
+
 
 def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
+    return pwd_context.verify(_truncate_for_bcrypt(plain_password), hashed_password)
 
 def create_user(db: Session, user: schemas.UserCreate):
     hashed_pw = get_password_hash(user.password)
