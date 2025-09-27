@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Request, UploadFile, File, Form
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, FileResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from typing import Optional
@@ -11,6 +11,9 @@ from .. import models, schemas, crud, database
 router = APIRouter(prefix="/portal", tags=["portal"])
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+
+FRONTEND_DIST_DIR = BASE_DIR / "static" / "forms"
+FRONTEND_INDEX_FILE = FRONTEND_DIST_DIR / "index.html"
 
 UPLOAD_DIR = BASE_DIR / "uploads"
 UPLOAD_DIR.mkdir(exist_ok=True)
@@ -109,6 +112,9 @@ async def upload_file(
 @router.get("/profile/admin/{user_id}", response_class=HTMLResponse)
 def profile_admin(user_id: int, request: Request, db: Session = Depends(database.get_db)):
     # Admin view of a user's profile (no session requirement)
+    if FRONTEND_INDEX_FILE.exists():
+        return FileResponse(FRONTEND_INDEX_FILE, media_type="text/html")
+
     db_user = db.query(models.User).filter(models.User.id == user_id).first()
     if not db_user:
         raise HTTPException(status_code=404, detail="User not found")
