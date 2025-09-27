@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom";
 
 const ProfileOverview: React.FC = () => {
   const { id } = useParams<{ id?: string }>();
+const ApplicantProfile: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const profileLabel = id ? `Profile Details · ID ${id}` : "Profile Details";
 
   return (
     <div className="bg-[#f7f8fa] min-h-screen p-4">
@@ -15,6 +18,7 @@ const ProfileOverview: React.FC = () => {
           <span className="font-medium text-gray-700">
             {id ? `Profile Details · ID ${id}` : "Profile Details"}
           </span>
+          <span className="font-medium text-gray-700">{profileLabel}</span>
         </div>
         <button className="bg-gray-100 border border-gray-300 text-gray-700 px-4 py-1 rounded hover:bg-gray-200 text-sm">
           Send Email
@@ -44,6 +48,7 @@ const ProfileOverview: React.FC = () => {
           <div className="bg-white rounded-md p-4 shadow-sm">
             <div className="w-full h-28 bg-gray-200 rounded mb-3" />
             <div className="font-medium text-gray-700 mb-1">Quik Spapshot</div>
+            <div className="font-medium text-gray-700 mb-1">Quick Snapshot</div>
             <div className="space-y-2">
               <div className="h-3 bg-gray-200 rounded w-3/4" />
               <div className="h-3 bg-gray-200 rounded w-5/6" />
@@ -78,6 +83,7 @@ const ProfileOverview: React.FC = () => {
             <div className="font-medium text-gray-700 text-sm mb-1">
               Training And Developement
             </div>
+            <div className="font-medium text-gray-700 text-sm mb-1">Training &amp; Development</div>
             <div className="h-16 bg-gray-200 rounded w-full" />
           </div>
         </div>
@@ -101,3 +107,5 @@ const ProfileOverview: React.FC = () => {
 };
 
 export default ProfileOverview;
+export default ApplicantProfile;
+
