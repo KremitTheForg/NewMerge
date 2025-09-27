@@ -26,7 +26,11 @@ def get_candidates(db: Session, skip: int = 0, limit: int = 10):
 
 ##
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(
+    schemes=["bcrypt"],
+    deprecated="auto",
+    bcrypt__truncate_error=False,
+)
 
 def get_password_hash(password: str):
     return pwd_context.hash(password)
